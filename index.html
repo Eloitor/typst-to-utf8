@@ -162,7 +162,7 @@
             return "";
         }
         if (mode === "#text") {
-            let displaymath_regex = /(.*)\$ ([^$]*) \$ (.*)/sm;
+            let displaymath_regex = /(.*)\$ ([^$]*) \$(.*)/sm;
             let inlinemath_regex = /(.*)\$([^$]*)\$(.*)/sm;
             while (true) {
                 let results = input.match(displaymath_regex);
