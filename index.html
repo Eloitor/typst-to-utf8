@@ -156,42 +156,62 @@
         }
         return input
     }
+    function processMathContent(content, mode) {
+        // Here you can process the math content, including handling inline vs block math for markdown
+        if (markdownCheckbox.checked && mode === "#text") {
+            if (content.startsWith(" ") && content.endsWith(" ")) {
+                return "```" + content.slice(1, -1) + "```";
+            } else {
+                return "`" + content + "`";
+            }
+        }
+        return content;
+    }
 
     function typst2utf8(input, mode) {
         if (input === undefined) {
             return "";
         }
-        if (mode === "#text") {
-            let math_regex = /(.*)\$([^$]*)\$(.*)/sm;
-            while (true) {
-                let results = input.match(math_regex);
-                if (results === null) {
-                    break;
+        let result = "";
+        let state = mode === "#text" ? "text" : "math";
+        let mathContent = "";
+        let i = 0;
+
+        while (i < input.length) {
+            if (state === "text") {
+                if (input[i] === '$') {
+                    state = "math";
+                } else {
+                    result += input[i];
                 }
-                let delim = ""
-                if (markdownCheckbox.checked) {
-                    if (results[2].startsWith(" ") && results[2].endsWith(" ")) {
-                        delim = "```"
-                        if (!results[1].endsWith("\n")) {
-                            results[1] += "\n";
+                i++;
+            } else if (state === "math") {
+                if (input[i] === '$') {
+                    state = "text";
+                    result += processMathContent(mathContent, mode);
+                    mathContent = "";
+                    i++;
+                } else if (input[i] === '"') {
+                    state = "literal";
+                    mathContent += input[i]; // Include the " in the output
+                    i++;
+                    while (i < input.length && state === "literal") {
+                        mathContent += input[i];
+                        if (input[i] === '"') {
+                            state = "math";
                         }
-                        if (!results[3].startsWith("\n")) {
-                            results[3] = "\n" + results[3];
-                        }
-                    } else {
-                        delim = "`"
+                        i++;
                     }
+                } else {
+                    mathContent += input[i];
+                    i++;
                 }
-                let processed = delim + typst2utf8(results[2], mode = "") + delim;
-                input = results[1] + processed + results[3];
             }
-        } else {
-            input = processSubAndSuperscripts(input);
-            Object.keys(map).forEach(function (key) {
-                input = input.split(key).join(map[key]);
-            });
         }
-        return input
+        if (mathContent) {
+            result += processMathContent(mathContent, mode);
+        }
+        return result;
     }
 
     function update(from, to) {
