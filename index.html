@@ -53,7 +53,7 @@
                 Copy
             </a>
         </div>
-        <textarea placeholder="Text with $...$ and $$...$$ typst math" id="typstInput-text"></textarea>
+        <textarea placeholder="Text with $...$ and $ ... $ typst math" id="typstInput-text"></textarea>
         <span style="font-size:2.5em;
             margin:.25em;
             vertical-align: top;
@@ -162,7 +162,7 @@
             return "";
         }
         if (mode === "#text") {
-            let displaymath_regex = /(.*)\$\$([^$]*)\$\$(.*)/sm;
+            let displaymath_regex = /(.*)\$ ([^$]*) \$ (.*)/sm;
             let inlinemath_regex = /(.*)\$([^$]*)\$(.*)/sm;
             while (true) {
                 let results = input.match(displaymath_regex);
