@@ -162,8 +162,9 @@
             return "";
         }
         if (mode === "#text") {
-            let displaymath_regex = /(.*)\$ ([^$]*) \$(.*)/sm;
+            // let displaymath_regex = /(.*)\$ ([^$]*) \$(.*)/sm;
             let inlinemath_regex = /(.*)\$([^$]*)\$(.*)/sm;
+            /*
             while (true) {
                 let results = input.match(displaymath_regex);
                 if (results === null) {
@@ -173,6 +174,7 @@
                 let processed = delim + typst2utf8(results[2], mode = "") + delim;
                 input = results[1] + processed + results[3];
             }
+            */
             while (true) {
                 let results = input.match(inlinemath_regex);
                 if (results === null) {
