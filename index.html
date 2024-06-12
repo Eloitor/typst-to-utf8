@@ -162,25 +162,26 @@
             return "";
         }
         if (mode === "#text") {
-            // let displaymath_regex = /(.*)\$ ([^$]*) \$(.*)/sm;
-            let inlinemath_regex = /(.*)\$([^$]*)\$(.*)/sm;
-            /*
+            let math_regex = /(.*)\$([^$]*)\$(.*)/sm;
             while (true) {
-                let results = input.match(displaymath_regex);
+                let results = input.match(math_regex);
                 if (results === null) {
                     break;
                 }
-                let delim = markdownCheckbox.checked ? "```" : "";
-                let processed = delim + typst2utf8(results[2], mode = "") + delim;
-                input = results[1] + processed + results[3];
-            }
-            */
-            while (true) {
-                let results = input.match(inlinemath_regex);
-                if (results === null) {
-                    break;
+                let delim = ""
+                if (markdownCheckbox.checked) {
+                    if (results[2].startsWith(" ") && results[2].endsWith(" ")) {
+                        delim = "```"
+                        if (!results[1].endsWith("\n")) {
+                            results[1] += "\n";
+                        }
+                        if (!results[3].startsWith("\n")) {
+                            results[3] = "\n" + results[3];
+                        }
+                    } else {
+                        delim = "`"
+                    }
                 }
-                let delim = markdownCheckbox.checked ? "`" : "";
                 let processed = delim + typst2utf8(results[2], mode = "") + delim;
                 input = results[1] + processed + results[3];
             }
