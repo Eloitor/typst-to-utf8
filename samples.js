@@ -12,7 +12,7 @@ var samples = [
     'sum_(i=1)^n f(x_i) <= f(sum_(i=1)^n x_i)',
 ];
 var samplesText = [
-    "Shouldn't it be $\\sum_{i=1}^n$ and not $\\sum_{i=0}^{n-1}$ in " + "\n" +
-    "$$\\sum_{i=1}^n f(x_i) \\leq f(\\sum_{i=1}^n x_i)$$" + "\n" +
+    "Shouldn't it be $sum_(i=1)^n$ and not $sum_(i=0)^(n-1)$ in " + "\n" +
+    "$ sum_(i=1)^n f(x_i) <= f(sum_(i=1)^n x_i) $" + "\n" +
     "to match the def. in Section 2?",
 ];
