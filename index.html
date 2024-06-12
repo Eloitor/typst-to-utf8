@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <title>
-        TeX2UTF8
+        Typst2UTF8
     </title>
     <script src="https://kit.fontawesome.com/7194e22a27.js">
     </script>
@@ -20,7 +20,7 @@
 <body>
 <div class="main">
     <h1>
-        LaTeX ⟶ UTF-8
+        Typst ⟶ UTF-8
     </h1>
 
     <div id="mode-buttons">
@@ -32,7 +32,7 @@
     </div>
 
     <div id="snippet-area">
-        <input autofocus="" id="latexInput" placeholder="Latex formula" required="" type="latex"></input>
+        <input autofocus="" id="typstInput" placeholder="Typst formula" required="" type="typst"></input>
         <span style="font-size:2em">
             ↓
         </span>
@@ -53,7 +53,7 @@
                 Copy
             </a>
         </div>
-        <textarea placeholder="Text with $...$ and $$...$$ latex math" id="latexInput-text"></textarea>
+        <textarea placeholder="Text with $...$ and $$...$$ typst math" id="typstInput-text"></textarea>
         <span style="font-size:2.5em;
             margin:.25em;
             vertical-align: top;
@@ -63,11 +63,11 @@
         <textarea placeholder="UTF8 output" id="utf8Output-text"></textarea>
     </div>
     <div id="links">
-        <a href="https://github.com/fKunstner/latex-to-utf8" title="GitHub page">
+        <a href="https://github.com/eloitor/typst-to-utf8" title="GitHub page">
             <i class="fab fa-github">
             </i>
         </a>
-        <a href="https://github.com/fKunstner/latex-to-utf8/issues/new/choose" title="Report a bug">
+        <a href="https://github.com/eloitor/typst-to-utf8/issues/new/choose" title="Report a bug">
             <i class="fas fa-bug">
             </i>
         </a>
@@ -75,9 +75,9 @@
 </div>
 </body>
 <script>
-    var latexInput = document.getElementById("latexInput");
+    var typstInput = document.getElementById("typstInput");
     var utf8Output = document.getElementById("utf8Output");
-    var latexInputText = document.getElementById("latexInput-text");
+    var typstInputText = document.getElementById("typstInput-text");
     var utf8OutputText = document.getElementById("utf8Output-text");
     var copyButton = document.getElementById("copy");
     var copyTextButton = document.getElementById("copy-text");
@@ -111,7 +111,7 @@
         window.location.hash = mode;
 
         if (mode === "text") {
-            update(latexInputText, utf8OutputText);
+            update(typstInputText, utf8OutputText);
             textButton.classList.add("active");
             snippetButton.classList.add("inactive");
             textButton.classList.remove("inactive");
@@ -119,7 +119,7 @@
             snippetArea.style.display = "none";
             textArea.style.display = "block";
         } else if (mode === "snippet") {
-            update(latexInput, utf8Output);
+            update(typstInput, utf8Output);
             textButton.classList.add("inactive");
             snippetButton.classList.add("active");
             textButton.classList.remove("active");
@@ -157,7 +157,7 @@
         return input
     }
 
-    function latex2utf8(input, mode) {
+    function typst2utf8(input, mode) {
         if (input === undefined) {
             return "";
         }
@@ -170,7 +170,7 @@
                     break;
                 }
                 let delim = markdownCheckbox.checked ? "```" : "";
-                let processed = delim + latex2utf8(results[2], mode = "") + delim;
+                let processed = delim + typst2utf8(results[2], mode = "") + delim;
                 input = results[1] + processed + results[3];
             }
             while (true) {
@@ -179,7 +179,7 @@
                     break;
                 }
                 let delim = markdownCheckbox.checked ? "`" : "";
-                let processed = delim + latex2utf8(results[2], mode = "") + delim;
+                let processed = delim + typst2utf8(results[2], mode = "") + delim;
                 input = results[1] + processed + results[3];
             }
         } else {
@@ -192,23 +192,23 @@
     }
 
     function update(from, to) {
-        to.value = latex2utf8(from.value, mode = window.location.hash);
+        to.value = typst2utf8(from.value, mode = window.location.hash);
     }
 
     function setRandomSample() {
-        latexInput.value = samples[Math.floor(Math.random() * samples.length)];
-        latexInputText.value = samplesText[Math.floor(Math.random() * samplesText.length)];
-        update(latexInput, utf8Output);
-        update(latexInputText, utf8OutputText);
+        typstInput.value = samples[Math.floor(Math.random() * samples.length)];
+        typstInputText.value = samplesText[Math.floor(Math.random() * samplesText.length)];
+        update(typstInput, utf8Output);
+        update(typstInputText, utf8OutputText);
     }
 
     function parseSnippet() {
-        update(latexInput, utf8Output)
+        update(typstInput, utf8Output)
     }
 
     function parseText() {
-        autoExpand(latexInputText, utf8OutputText)
-        update(latexInputText, utf8OutputText)
+        autoExpand(typstInputText, utf8OutputText)
+        update(typstInputText, utf8OutputText)
     }
 
     function copyToClipboard(from) {
@@ -233,8 +233,8 @@
             activateMode("text")
         }
 
-        latexInput.addEventListener("keyup", parseSnippet);
-        latexInputText.addEventListener("keyup", parseText);
+        typstInput.addEventListener("keyup", parseSnippet);
+        typstInputText.addEventListener("keyup", parseText);
         copyButton.addEventListener("click", copyToClipboardSnippet);
         copyTextButton.addEventListener("click", copyToClipboardText);
         snippetButton.addEventListener("click", clickSnippetButton);

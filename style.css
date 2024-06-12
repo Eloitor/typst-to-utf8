@@ -21,10 +21,10 @@ body {
     text-align: center;
 }
 
-#latexInput-text {
+#typstInput-text {
     color: #495057;
 }
-#latexInput {
+#typstInput {
     text-align: center;
     width: 100%;
     font-size: 1.5em;
