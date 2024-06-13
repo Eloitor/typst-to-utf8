@@ -244,6 +244,7 @@
 
         // Highlight errors
         const highlightedText = text.replace(errorPattern, '<span class="error">$&</span>');
+        console.log(highlightedText);
 
         // Set the new HTML content
         typstInput.innerHTML = escapeHtml(highlightedText).replace(/&lt;span class=&quot;error&quot;&gt;(error)&lt;\/span&gt;/g, '<span class="error">$1</span>');
