@@ -227,42 +227,44 @@
     }
 
     function restoreSelection(containerEl, start, end) {
-        let charIndex = { start: start, end: end };
-        const nodeStack = [containerEl];
-        let nodes = [];
-        let foundStart = false;
-        let foundEnd = false;
-        let node;
-
-        while ((node = nodeStack.pop())) {
-            if (node.nodeType === 3) {
-                nodes.push(node);
-                if (!foundStart && charIndex.start <= node.length) {
-                    charIndex.start = { node: node, offset: charIndex.start };
-                    console.log("Node", node);
-                    console.log(charIndex.start);
-                    foundStart = true;
-                } else {
-                    charIndex.start -= node.length;
-                }
-                if (!foundEnd && charIndex.end <= node.length) {
-                    charIndex.end = { node: node, offset: charIndex.end };
-                    foundEnd = true;
-                } else {
-                    charIndex.end -= node.length;
-                }
-            } else {
-                let i = node.childNodes.length;
-                while (i--) nodeStack.push(node.childNodes[i]);
-            }
-        }
-
         const range = document.createRange();
         const sel = window.getSelection();
 
-        if (foundStart && foundEnd) {
-            range.setStart(charIndex.start.node, charIndex.start.offset);
-            range.setEnd(charIndex.end.node, charIndex.end.offset);
+        let charIndex = 0;
+        let startNode = null;
+        let startOffset = 0;
+        let endNode = null;
+        let endOffset = 0;
+
+        function traverseNodes(node) {
+            if (node.nodeType === 3) {
+                const textLength = node.textContent.length;
+
+                if (startNode === null && charIndex + textLength >= start) {
+                    startNode = node;
+                    startOffset = start - charIndex;
+                }
+                if (endNode === null && charIndex + textLength >= end) {
+                    endNode = node;
+                    endOffset = end - charIndex;
+                }
+
+                charIndex += textLength;
+            } else {
+                for (let i = 0; i < node.childNodes.length; i++) {
+                    traverseNodes(node.childNodes[i]);
+                    if (startNode !== null && endNode !== null) {
+                        return;
+                    }
+                }
+            }
+        }
+
+        traverseNodes(containerEl);
+
+        if (startNode !== null && endNode !== null) {
+            range.setStart(startNode, startOffset);
+            range.setEnd(endNode, endOffset);
             sel.removeAllRanges();
             sel.addRange(range);
         }
