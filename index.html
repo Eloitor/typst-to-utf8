@@ -220,7 +220,7 @@
     }
 
     function setRandomSample() {
-        typstInput.value = samples[Math.floor(Math.random() * samples.length)];
+        typstInput.innerText = samples[Math.floor(Math.random() * samples.length)];
         typstInputText.value = samplesText[Math.floor(Math.random() * samplesText.length)];
         update(typstInput, utf8Output);
         update(typstInputText, utf8OutputText);
@@ -234,14 +234,14 @@
         const errorPattern = /error/g;
 
         // Escape HTML to prevent XSS
-        const escapeHtml = (unsafe) => {
-            return unsafe
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
+        <!-- const escapeHtml = (unsafe) => { -->
+            <!-- return unsafe -->
+                <!-- .replace(/&/g, "&amp;") -->
+                <!-- .replace(/</g, "&lt;") -->
+                <!-- .replace(/>/g, "&gt;") -->
+                <!-- .replace(/"/g, "&quot;") -->
+                <!-- .replace(/'/g, "&#039;"); -->
+        <!-- } -->
 
         // Highlight errors
         console.log(text);
