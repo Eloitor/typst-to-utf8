@@ -226,13 +226,30 @@
     }
 
     function parseSnippet() {
+        const typstInput = document.getElementById('typstInput');
+        const text = typstInput.innerText;
+
+        // Define your error pattern here
         const errorPattern = /error/g;
-        if (errorPattern.test(typstInput.value)) {
-            typstInput.classList.add('error');
-        } else {
-            typstInput.classList.remove('error');
+
+        // Escape HTML to prevent XSS
+        const escapeHtml = (unsafe) => {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
         }
-        update(typstInput, utf8Output)
+
+        // Highlight errors
+        const highlightedText = text.replace(errorPattern, '<span class="error">$&</span>');
+
+        // Set the new HTML content
+        typstInput.innerHTML = escapeHtml(highlightedText).replace(/&lt;span class=&quot;error&quot;&gt;(error)&lt;\/span&gt;/g, '<span class="error">$1</span>');
+
+        // Update utf8Output (assuming update function is defined elsewhere)
+        update(typstInput, document.getElementById('utf8Output'));
     }
 
     function parseText() {
