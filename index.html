@@ -249,7 +249,9 @@
         console.log(highlightedText);
 
         // Set the new HTML content
-        typstInput.innerHTML = highlightedText;
+        if (highlightedText != typstInput.innerHTML) {
+            typstInput.innerHTML = highlightedText;
+        }
         // escapeHtml(highlightedText).replace(/&lt;span class=&quot;error&quot;&gt;(error)&lt;\/span&gt;/g, '<span class="error">$1</span>');
 
         // Update utf8Output (assuming update function is defined elsewhere)
