@@ -296,12 +296,12 @@
             const endOffset = range.endOffset;
             typstInput.innerHTML = highlightedText;
             const sel = window.getSelection();
-            <!-- sel.removeAllRanges(); -->
-            const r = selection.getRangeAt(0);
-            r.setStart(startOffset);
-            sel.addRange(r);
+            sel.removeAllRanges();
+            <!-- const r = selection.getRangeAt(0); -->
+            <!-- r.setStart(startOffset); -->
+            <!-- sel.addRange(r); -->
             
-            <!-- restoreSelection(typstInput, startOffset, endOffset); -->
+            restoreSelection(typstInput, startOffset, endOffset);
         }
         // escapeHtml(highlightedText).replace(/&lt;span class=&quot;error&quot;&gt;(error)&lt;\/span&gt;/g, '<span class="error">$1</span>');
 
