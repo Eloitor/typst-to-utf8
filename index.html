@@ -227,7 +227,7 @@
     }
 
     function restoreSelection(containerEl, start, end) {
-        const charIndex = { start: start, end: end };
+        let charIndex = { start: start, end: end };
         const nodeStack = [containerEl];
         let nodes = [];
         let foundStart = false;
