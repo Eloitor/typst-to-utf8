@@ -286,13 +286,13 @@
         console.log(highlightedText);
 
         // Set the new HTML content
-        if (highlightedText !== div.innerHTML) {
+        if (highlightedText !== typstInput.innerHTML) {
             const selection = window.getSelection();
             const range = selection.getRangeAt(0);
             const startOffset = range.startOffset;
             const endOffset = range.endOffset;
-            div.innerHTML = highlightedText;
-            restoreSelection(div, startOffset, endOffset);
+            typstInput.innerHTML = highlightedText;
+            restoreSelection(typstInput, startOffset, endOffset);
         }
         // escapeHtml(highlightedText).replace(/&lt;span class=&quot;error&quot;&gt;(error)&lt;\/span&gt;/g, '<span class="error">$1</span>');
 
