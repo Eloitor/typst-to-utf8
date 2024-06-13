@@ -291,17 +291,15 @@
         // Set the new HTML content
         if (highlightedText !== typstInput.innerHTML) {
             const selection = window.getSelection();
-            const range = selection.getRangeAt(0).cloneRange();
-            console.log(range)
-            <!-- const startOffset = range.startOffset; -->
-            <!-- const endOffset = range.endOffset; -->
+            const range = selection.getRangeAt(0);
+            const startOffset = range.startOffset;
+            const endOffset = range.endOffset;
             typstInput.innerHTML = highlightedText;
-            console.log(range)
-
             const sel = window.getSelection();
-            
-            sel.removeAllRanges();
-            sel.addRange(range);
+            <!-- sel.removeAllRanges(); -->
+            const r = selection.getRangeAt(0);
+            r.setStart(startOffset);
+            sel.addRange(r);
             
             <!-- restoreSelection(typstInput, startOffset, endOffset); -->
         }
