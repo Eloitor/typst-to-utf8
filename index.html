@@ -275,17 +275,8 @@
         const text = typstInput.innerHTML;
 
         // Define your error pattern here
-        const errorPattern = /error/g;
-
-        // Escape HTML to prevent XSS
-        <!-- const escapeHtml = (unsafe) => { -->
-            <!-- return unsafe -->
-                <!-- .replace(/&/g, "&amp;") -->
-                <!-- .replace(/</g, "&lt;") -->
-                <!-- .replace(/>/g, "&gt;") -->
-                <!-- .replace(/"/g, "&quot;") -->
-                <!-- .replace(/'/g, "&#039;"); -->
-        <!-- } -->
+        <!-- const errorPattern = /error/g; -->
+        const errorPattern = /\berror\b(?![^<]*<\/span>)/g;
 
         // Highlight errors
         console.log(text);
@@ -301,15 +292,10 @@
             typstInput.innerHTML = highlightedText;
             const sel = window.getSelection();
             sel.removeAllRanges();
-            <!-- const r = selection.getRangeAt(0); -->
-            <!-- r.setStart(startOffset); -->
-            <!-- sel.addRange(r); -->
-            
+           
             restoreSelection(typstInput, startOffset, endOffset);
         }
-        // escapeHtml(highlightedText).replace(/&lt;span class=&quot;error&quot;&gt;(error)&lt;\/span&gt;/g, '<span class="error">$1</span>');
 
-        // Update utf8Output (assuming update function is defined elsewhere)
         update(typstInput, document.getElementById('utf8Output'));
     }
 
