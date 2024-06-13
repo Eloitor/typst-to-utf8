@@ -156,6 +156,11 @@ textarea {
     padding: 1em;
 }
 
+.error {
+    text-decoration: underline;
+    text-decoration-color: red;
+    text-decoration-style: wavy;
+}
 
 @media all and (max-width: 30em) {
     #copy {

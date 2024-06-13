@@ -226,6 +226,12 @@
     }
 
     function parseSnippet() {
+        const errorPattern = /error/g;
+        if (errorPattern.test(typstInput.value)) {
+            typstInput.classList.add('error');
+        } else {
+            typstInput.classList.remove('error');
+        }
         update(typstInput, utf8Output)
     }
 
