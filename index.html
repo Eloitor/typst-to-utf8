@@ -228,7 +228,7 @@
 
     function parseSnippet() {
         const typstInput = document.getElementById('typstInput');
-        const text = typstInput.innerHtml;
+        const text = typstInput.innerHTML;
 
         // Define your error pattern here
         const errorPattern = /error/g;
@@ -249,7 +249,7 @@
         console.log(highlightedText);
 
         // Set the new HTML content
-        typstInput.innerHtml = highlightedText;
+        typstInput.innerHTML = highlightedText;
         // escapeHtml(highlightedText).replace(/&lt;span class=&quot;error&quot;&gt;(error)&lt;\/span&gt;/g, '<span class="error">$1</span>');
 
         // Update utf8Output (assuming update function is defined elsewhere)
