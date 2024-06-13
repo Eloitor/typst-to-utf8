@@ -292,10 +292,15 @@
         if (highlightedText !== typstInput.innerHTML) {
             const selection = window.getSelection();
             const range = selection.getRangeAt(0);
-            const startOffset = range.startOffset;
-            const endOffset = range.endOffset;
+            <!-- const startOffset = range.startOffset; -->
+            <!-- const endOffset = range.endOffset; -->
             typstInput.innerHTML = highlightedText;
-            restoreSelection(typstInput, startOffset, endOffset);
+
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            
+            <!-- restoreSelection(typstInput, startOffset, endOffset); -->
         }
         // escapeHtml(highlightedText).replace(/&lt;span class=&quot;error&quot;&gt;(error)&lt;\/span&gt;/g, '<span class="error">$1</span>');
 
