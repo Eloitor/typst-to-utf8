@@ -226,6 +226,43 @@
         update(typstInputText, utf8OutputText);
     }
 
+    function restoreSelection(containerEl, start, end) {
+        const charIndex = { start: start, end: end };
+        const nodeStack = [containerEl], nodes = [], foundStart = false, foundEnd = false;
+        let node;
+
+        while ((node = nodeStack.pop())) {
+            if (node.nodeType === 3) {
+                nodes.push(node);
+                if (!foundStart && charIndex.start <= node.length) {
+                    charIndex.start = { node: node, offset: charIndex.start };
+                    foundStart = true;
+                } else {
+                    charIndex.start -= node.length;
+                }
+                if (!foundEnd && charIndex.end <= node.length) {
+                    charIndex.end = { node: node, offset: charIndex.end };
+                    foundEnd = true;
+                } else {
+                    charIndex.end -= node.length;
+                }
+            } else {
+                let i = node.childNodes.length;
+                while (i--) nodeStack.push(node.childNodes[i]);
+            }
+        }
+
+        const range = document.createRange();
+        const sel = window.getSelection();
+
+        if (foundStart && foundEnd) {
+            range.setStart(charIndex.start.node, charIndex.start.offset);
+            range.setEnd(charIndex.end.node, charIndex.end.offset);
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+    }
+
     function parseSnippet() {
         const typstInput = document.getElementById('typstInput');
         const text = typstInput.innerHTML;
@@ -249,8 +286,13 @@
         console.log(highlightedText);
 
         // Set the new HTML content
-        if (highlightedText != typstInput.innerHTML) {
-            typstInput.innerHTML = highlightedText;
+        if (highlightedText !== div.innerHTML) {
+            const selection = window.getSelection();
+            const range = selection.getRangeAt(0);
+            const startOffset = range.startOffset;
+            const endOffset = range.endOffset;
+            div.innerHTML = highlightedText;
+            restoreSelection(div, startOffset, endOffset);
         }
         // escapeHtml(highlightedText).replace(/&lt;span class=&quot;error&quot;&gt;(error)&lt;\/span&gt;/g, '<span class="error">$1</span>');
 
