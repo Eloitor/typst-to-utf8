@@ -228,7 +228,10 @@
 
     function restoreSelection(containerEl, start, end) {
         const charIndex = { start: start, end: end };
-        const nodeStack = [containerEl], nodes = [], foundStart = false, foundEnd = false;
+        const nodeStack = [containerEl];
+        let nodes = [];
+        let foundStart = false;
+        let foundEnd = false;
         let node;
 
         while ((node = nodeStack.pop())) {
