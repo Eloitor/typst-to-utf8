@@ -239,6 +239,7 @@
                 nodes.push(node);
                 if (!foundStart && charIndex.start <= node.length) {
                     charIndex.start = { node: node, offset: charIndex.start };
+                    console.log("Node", node)
                     foundStart = true;
                 } else {
                     charIndex.start -= node.length;
