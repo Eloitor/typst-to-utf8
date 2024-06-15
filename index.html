@@ -275,12 +275,13 @@
         const text = typstInput.innerHTML;
 
         // Define your error pattern here
-        <!-- const errorPattern = /error/g; -->
-        const errorPattern = /\berror\b(?![^<]*<\/span>)/g;
+        const errorPattern = /error/g;
 
         // Highlight errors
         console.log(text);
-        const highlightedText = text.replace(errorPattern, '<span class="error">$&</span>');
+        let highlightedText = text.replace('<span class="error">', '');
+        highlightedText = highlightedText.replace('</span>', '');
+        highlightedText = highlightedText.replace(errorPattern, '<span class="error">$&</span>');
         console.log(highlightedText);
 
         // Set the new HTML content
